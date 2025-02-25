@@ -18,6 +18,10 @@ export default defineContentConfig({
         locale: z.string(),
         createdAt: z.date(),
         updatedAt: z.date(),
+    excerpt: z.object({
+      type: z.string(),
+      children: z.any(),
+    }),
       }),
     }),
     projects: defineCollection({
@@ -35,6 +39,10 @@ export default defineContentConfig({
         locale: z.string(),
         createdAt: z.date(),
         updatedAt: z.date(),
+        excerpt: z.object({
+          type: z.string(),
+          children: z.any(),
+        }),
       }),
     }),
     about: defineCollection({
@@ -52,6 +60,10 @@ export default defineContentConfig({
         locale: z.string(),
         createdAt: z.date(),
         updatedAt: z.date(),
+        excerpt: z.object({
+          type: z.string(),
+          children: z.any(),
+        }),
       }),
     }),
   },

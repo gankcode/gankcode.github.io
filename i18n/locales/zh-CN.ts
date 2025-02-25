@@ -10,7 +10,9 @@ export default defineI18nLocale(async locale => {
       tools: "工具",
       about: "关于",
     },
-
+    articles: {
+      readMore: "阅读更多",
+    },
     ...useRuntimeConfig().public.locales[locale],
   }
 })
