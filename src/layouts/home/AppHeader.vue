@@ -69,7 +69,6 @@
     <div class="flex row items-center">
       <UTooltip text="https://github.com/robotism">
         <UButton
-          la
           icon="i-simple-icons-github"
           variant="ghost"
           color="primary"
