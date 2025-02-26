@@ -2,7 +2,7 @@
   <div>
     <DataView :value="articles" data-key="id">
       <template #list="props">
-        <div class="flex flex-col">
+        <div class="flex flex-col justify-center items-center">
           <div v-for="(item, index) in props.items" :key="index">
             <ArticleItem :article="item" />
           </div>

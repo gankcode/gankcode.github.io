@@ -1,6 +1,6 @@
 <template>
   <Card
-    class="w-[96vw] overflow-hidden mx-[2vw] my-2 dark:bg-gray-800 cursor-pointer"
+    class="w-[96vw] max-w-[768px] overflow-hidden mx-[2vw] my-2 dark:bg-gray-800 cursor-pointer"
     @click="$router.push(article?.to)"
   >
     <template #title>
@@ -12,19 +12,15 @@
       <div>{{ article?.description }}</div>
     </template>
     <template #content>
-      <div class="w-full flex flex-row">
-        <Image
-          class="w-32 h-24 md:w-48 md:h-32 mr-2"
-          :alt="article?.title"
-          :src="article?.cover"
-        />
+      <div class="w-full flex flex-wrap justify-center">
+        <Image class="m-2" :alt="article?.title" :src="article?.cover" />
         <ContentRenderer v-if="article?.excerpt" :value="article?.excerpt" />
       </div>
     </template>
     <template #footer>
       <div class="flex flex-row">
         <div v-for="(tag, index) in article?.tags" :key="index">
-          <Tag size="sm" severity="secondary" :value="tag" />
+          <Tag class="m-1" size="sm" severity="secondary" :value="tag" />
         </div>
       </div>
     </template>
