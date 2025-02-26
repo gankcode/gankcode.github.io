@@ -1,18 +1,10 @@
 <template>
-  <UButton
-    class="flex row items-center text-nowrap dark:flex hidden"
-    icon="i-lucide-moon"
-    size="xl"
-    variant="ghost"
-    @click="isDark = !isDark"
-  />
-  <UButton
-    class="flex row items-center text-nowrap dark:hidden flex"
-    icon="i-lucide-sun"
-    size="xl"
-    variant="ghost"
-    @click="isDark = !isDark"
-  />
+  <div class="dark:flex hidden">
+    <Button icon="pi pi-moon" variant="text" @click="isDark = !isDark" />
+  </div>
+  <div class="flex dark:hidden">
+    <Button icon="pi pi-sun" variant="text" @click="isDark = !isDark" />
+  </div>
 </template>
 
 <script lang="ts" setup>

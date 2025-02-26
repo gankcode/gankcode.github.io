@@ -1,16 +1,34 @@
 <template>
   <div class="min-h-screen min-w-screen">
-    <header class="min-h-[48px]">
-      <AppHeader class="fixed w-full top-0 z-50 backdrop-blur-sm" />
-      <AppHeader class="invisible" />
+    <header>
+      <AppHeader
+        class="fixed w-full top-0 z-50 backdrop-blur-md"
+        :style="{
+          height: $env.style.header.height,
+        }"
+      />
+      <AppHeader
+        class="invisible"
+        :style="{
+          height: $env.style.header.height,
+        }"
+      />
     </header>
 
-    <main class="min-h-[calc(100vh_-_48px_-_48px)]">
-      <AppMain />
+    <main>
+      <AppMain
+        :style="{
+          minHeight: `calc(100vh - ${$env.style.header.height} - ${$env.style.footer.height})`,
+        }"
+      />
     </main>
 
-    <footer class="min-h-[48px]">
-      <AppFooter />
+    <footer>
+      <AppFooter
+        :style="{
+          height: $env.style.footer.height,
+        }"
+      />
     </footer>
   </div>
 </template>

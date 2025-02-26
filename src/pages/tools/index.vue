@@ -1,7 +1,18 @@
 <template>
   <div class="flex flex-row w-full">
-    <ScrollPanel class="w-[25vw] h-[calc(100vh_-_48px)]">
-      <Menu :model="items" class="w-[25vw] h-[calc(100vh_-_48px)]">
+    <ScrollPanel
+      class="w-[25vw]"
+      :style="{
+        height: `calc(100vh - ${$env.style.header.height} - ${$env.style.footer.height})`,
+      }"
+    >
+      <Menu
+        :model="items"
+        class="w-[25vw]"
+        :style="{
+          height: `calc(100vh - ${$env.style.header.height} - ${$env.style.footer.height})`,
+        }"
+      >
         <template #start>
           <span class="inline-flex items-center gap-1 px-2 py-2">
             <span class="text-xl font-semibold">
@@ -20,7 +31,12 @@
         </template>
       </Menu>
     </ScrollPanel>
-    <ScrollPanel class="w-[75vw] h-[calc(100vh_-_48px)]">
+    <ScrollPanel
+      class="w-[75vw]"
+      :style="{
+        height: `calc(100vh - ${$env.style.header.height} - ${$env.style.footer.height})`,
+      }"
+    >
       <NuxtPage />
     </ScrollPanel>
   </div>

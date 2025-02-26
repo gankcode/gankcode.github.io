@@ -3,12 +3,11 @@ import Aura from "@primeuix/themes/aura";
 
 import appconfig from "./site.config";
 
-
 export default defineNuxtConfig({
-  compatibilityDate: '2025-02-19',
+  compatibilityDate: "2025-02-19",
   devtools: { enabled: true },
   nitro: {
-      prerender: {
+    prerender: {
       crawlLinks: true,
       failOnError: false,
     },
@@ -87,13 +86,13 @@ export default defineNuxtConfig({
     locales: [
       {
         code: "en",
-        name:"English",
-        file: 'en-US.ts'
+        name: "English",
+        file: "en-US.ts",
       },
       {
         code: "zh",
-        name:"中文",
-        file: 'zh-CN.ts'
+        name: "中文",
+        file: "zh-CN.ts",
       },
     ],
     detectBrowserLanguage: {
@@ -101,7 +100,7 @@ export default defineNuxtConfig({
       cookieCrossOrigin: true,
       redirectOn: "root", // all, root, no prefix
     },
-    defaultLocale:  `en`,
+    defaultLocale: `en`,
     lazy: true,
   },
   css: ["~/app.css"],
@@ -128,6 +127,5 @@ export default defineNuxtConfig({
       include: "*",
     },
   },
-  content: {
-  },
+  content: {},
 });

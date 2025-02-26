@@ -1,18 +1,20 @@
 <template>
-  <div class="flex row w-full justify-between shadow-sm dark:shadow-gray-800">
+  <div
+    class="flex row w-full h-full justify-between shadow-sm dark:shadow-gray-800"
+  >
     <div class="flex row items-center">
       <AppTitle class="ml-2" />
-      <UButton
-        class="flex row items-center text-nowrap md:hidden"
-        icon="i-lucide-menu"
-        size="xl"
-        variant="ghost"
-        :trailing="false"
-        @click="isNaviDrawerOpen = true"
-        :label="$te(breadcrumbRoot) ? $t(breadcrumbRoot) : ''"
-      />
+      <div class="flex md:hidden">
+        <Button
+          class="text-nowrap"
+          icon="pi pi-bars"
+          variant="text"
+          @click="isNaviDrawerOpen = true"
+          :label="$te(breadcrumbRoot) ? $t(breadcrumbRoot) : ''"
+        />
+      </div>
     </div>
-    <div class="hidden md:flex w-auto overflow-hidden">
+    <div class="hidden md:flex w-auto overflow-hidden backdrop-blur-md">
       <UHorizontalNavigation :links="links">
         <template #default="{ link }">
           <span class="group-hover:text-primary relative">{{
@@ -22,59 +24,36 @@
       </UHorizontalNavigation>
     </div>
 
-    <USlideover
-      v-model="isNaviDrawerOpen"
-      class="flex md:hidden"
-      side="left"
-      :ui="{ width: 'w-screen max-w-xs' }"
-    >
-      <UCard
-        class="flex flex-col flex-1"
-        :ui="{
-          body: { base: 'flex-1' },
-          ring: '',
-          divide: 'divide-y divide-gray-100 dark:divide-gray-800',
-        }"
-      >
-        <template #header>
-          <div class="flex items-center justify-between">
-            <UButton
-              class="flex row items-center text-nowrap md:hidden rotate-90"
-              icon="i-lucide-menu"
-              size="xl"
-              variant="ghost"
-              :trailing="false"
-              @click="isNaviDrawerOpen = false"
-            />
-            <AppTitle />
-            <UButton
-              color="gray"
-              variant="ghost"
-              icon="i-heroicons-x-mark-20-solid"
-              class="-my-1"
-              @click="isNaviDrawerOpen = false"
-            />
-          </div>
+    <Drawer v-model:visible="isNaviDrawerOpen">
+      <template #header>
+        <div class="flex items-center justify-between">
+          <Button
+            class="flex row items-center text-nowrap md:hidden"
+            color="gray"
+            variant="text"
+            icon="pi pi-bars"
+            @click="isNaviDrawerOpen = false"
+          />
+          <AppTitle />
+        </div>
+      </template>
+      <UVerticalNavigation :links="links">
+        <template #default="{ link }">
+          <span class="group-hover:text-primary relative">{{
+            $t(link.label)
+          }}</span>
         </template>
-        <UVerticalNavigation :links="links">
-          <template #default="{ link }">
-            <span class="group-hover:text-primary relative">{{
-              $t(link.label)
-            }}</span>
-          </template>
-        </UVerticalNavigation>
-      </UCard>
-    </USlideover>
+      </UVerticalNavigation>
+    </Drawer>
 
     <div class="flex row items-center">
-      <UTooltip text="https://github.com/robotism">
-        <UButton
-          icon="i-simple-icons-github"
-          variant="ghost"
+      <UTooltip :text="$env.site.github">
+        <Button
+          icon="pi pi-github"
+          variant="text"
           color="primary"
-          size="xl"
           target="_blank"
-          to="https://github.com/robotism"
+          @click="$win.open($env.site.github)"
         />
       </UTooltip>
       <LocaleSelectButton />
@@ -94,6 +73,7 @@ const isNaviDrawerOpen = ref(false);
 
 const router = useRouter();
 const localeRoute = useLocaleRoute();
+const $win = useWindow();
 
 const breadcrumbRoot = computed(() => {
   const cur = router.currentRoute.value.path;

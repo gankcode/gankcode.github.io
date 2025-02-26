@@ -1,25 +1,43 @@
 <template>
-  <div v-if="locales.length > 1">
-    <UButton
+  <div class="flex flex-row items-center" v-if="locales.length > 1">
+    <Button
       v-if="locales.length == 2"
-      class="flex row items-center text-nowrap"
-      icon="i-lucide-languages"
-      size="xl"
-      variant="ghost"
-      :to="toggleLocalePath"
+      class="flex row text-nowrap"
+      icon="pi pi-language"
+      variant="text"
+      @click="router.push(toggleLocalePath)"
     />
-    <UDropdown v-else arrow :items="[langs]">
-      <template #item="{ item }">
-        <UButton :label="item.label" variant="ghost" />
-      </template>
-      <UButton :label="name" icon="i-lucide-languages" variant="ghost" />
-    </UDropdown>
+    <Button
+      v-else
+      class="flex row text-nowrap"
+      icon="pi pi-language"
+      :label="name"
+      variant="text"
+      @click="popover.show($event)"
+    />
+    <Popover ref="popover">
+      <div v-for="(lang, index) in langs" :key="index">
+        <Button
+          class="flex row items-center text-nowrap w-full"
+          :label="lang.label"
+          variant="text"
+          @click="
+            () => {
+              router.push(switchLocalePath(lang.code));
+              popover.hide();
+            }
+          "
+        />
+      </div>
+    </Popover>
   </div>
 </template>
 
 <script lang="ts" setup>
 const { locale, locales } = useI18n();
 const router = useRouter();
+
+const popover = ref();
 
 const switchLocalePath = useSwitchLocalePath();
 const toggleLocalePath = computed(() => {
@@ -34,8 +52,8 @@ const name = computed(() => {
 const langs = computed(() => {
   return locales.value.map((i) => {
     return {
+      code: i.code,
       label: i.name || i.code,
-      checked: locale.value === i.code,
       color: locale.value === i.code ? "primary" : "neutral",
       onSelect: () => {
         router.push(switchLocalePath(i.code));
