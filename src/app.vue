@@ -11,7 +11,6 @@
 <script setup>
 const { getPagePathArray } = useLocalePage();
 const router = useRouter();
-const localeRoute = useLocaleRoute();
 const { t } = useI18n();
 const { layout } = useLayout();
 

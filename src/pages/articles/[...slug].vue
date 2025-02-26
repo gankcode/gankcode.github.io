@@ -14,8 +14,6 @@
 </template>
 
 <script setup>
-const { locale } = useI18n();
-
 const { getArticleIdByRoute } = useArticles();
 
 const article = ref(null);
@@ -24,20 +22,13 @@ const getPage = async () => {
   if (!pageId) {
     return ref(null);
   }
-  const { data: article } = await useAsyncData(() =>
+  const { data } = await useAsyncData(() =>
     queryCollection("articles").where("id", "=", pageId).first()
   );
-  return article.value;
+  article.value = data.value;
 };
 
-article.value = await getPage();
-watch(
-  () => locale.value,
-  () => {
-    article.value = getPage();
-    console.log(article.value);
-  }
-);
+await getPage();
 
 useSeoMeta({
   title: article.value?.title,

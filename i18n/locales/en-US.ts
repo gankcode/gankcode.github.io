@@ -12,6 +12,11 @@ export default defineI18nLocale(async locale => {
     articles: {
       readMore: "Read More",
     },
+    tools:{
+      online:"Online Tools",
+      regex:"Regex",
+      certinfo:"Certinfo",
+    },
     ...useRuntimeConfig().public.locales[locale],
   }
 })

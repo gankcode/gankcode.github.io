@@ -9,21 +9,15 @@ const { locale } = useI18n();
 
 const content = ref();
 const getContent = async () => {
-  const { data: article } = await useAsyncData(() =>
+  const { data } = await useAsyncData(() =>
     queryCollection("about")
       .where("stem", "LIKE", locale.value + "/%")
       .first()
   );
-  return article.value;
+  content.value = data.value;
 };
 
-content.value = await getContent();
-watch(
-  () => locale.value,
-  () => {
-    content.value = getContent();
-  }
-);
+await getContent();
 
 useSeoMeta({
   title: content.value?.title,

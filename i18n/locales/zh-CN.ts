@@ -13,6 +13,11 @@ export default defineI18nLocale(async locale => {
     articles: {
       readMore: "阅读更多",
     },
+    tools:{
+      online:"在线工具",
+      regex:"正则表达式",
+      certinfo:"证书信息",
+    },
     ...useRuntimeConfig().public.locales[locale],
   }
 })

@@ -5,7 +5,10 @@ import appconfig from "./site.config";
 
 
 export default defineNuxtConfig({
-  compatibilityDate: "2024-11-01",
+  compatibilityDate: '2025-02-19',
+  future: {
+    compatibilityVersion: 4,
+  },
   devtools: { enabled: true },
   nitro: {
       prerender: {
@@ -114,7 +117,7 @@ export default defineNuxtConfig({
   primevue: {
     options: {
       theme: {
-        preset: Aura,
+        // preset: Aura,
         options: {
           darkModeSelector: ".dark",
         },
@@ -129,19 +132,5 @@ export default defineNuxtConfig({
     },
   },
   content: {
-    build: {
-      markdown: {
-        highlight: {
-          theme: {
-            // Default theme (same as single string)
-            default: 'github-light',
-            // Theme used if `html.dark`
-            dark: 'github-dark',
-            // Theme used if `html.sepia`
-            sepia: 'monokai'
-          }
-        }
-      }
-    },
   },
 });

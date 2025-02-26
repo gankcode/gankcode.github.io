@@ -5,8 +5,8 @@ category: ["about"]
 tags: ["about"]
 title: About
 description: About me
-createdAt: 2024-10-19T07:52:00.000Z
-updatedAt: 2024-10-19T07:52:00.000Z
+createdAt: 2025-02-26T09:43:55.000Z
+updatedAt: 2025-02-26T09:43:55.000Z
 ---
 
 # About
