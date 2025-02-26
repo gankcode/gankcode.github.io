@@ -1,7 +1,11 @@
 <template>
   <template v-if="article">
-    <div class="w-full h-full">
-      <ContentRenderer :value="article" />
+    <div class="w-full h-full flex justify-center items-center">
+      <ContentRenderer
+        class="prose max-w-[1080px]"
+        :prose="true"
+        :value="article"
+      />
     </div>
   </template>
   <template v-else>

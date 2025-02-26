@@ -1,5 +1,5 @@
 <template>
-  <div class="card flex flex-col items-center overflow-hidden">
+  <div class="card flex flex-col items-center overflow-hidden mx-4">
     <div class="flex flex-col items-center gap-2">
       <span class="text-xl font-medium">Scroll Down</span>
       <span
