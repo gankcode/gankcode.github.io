@@ -7,17 +7,15 @@
 <script lang="ts" setup>
 const { locale } = useI18n();
 
-const content = ref();
-const getContent = async () => {
-  const { data } = await useAsyncData(() =>
+const { data: content } = await useAsyncData(
+  () =>
     queryCollection("about")
       .where("stem", "LIKE", locale.value + "/%")
-      .first()
-  );
-  content.value = data.value;
-};
-
-await getContent();
+      .first(),
+  {
+    watch: [locale],
+  }
+);
 
 useSeoMeta({
   title: content.value?.title,

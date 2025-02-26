@@ -1,9 +1,15 @@
 <template>
   <div>
-    <DataView :value="articles" data-key="id">
+    <DataView
+      :value="articles?.map?.((it) => it || undefined) || []"
+      data-key="id"
+    >
       <template #list="props">
         <div class="flex flex-col justify-center items-center">
-          <div v-for="(item, index) in props.items" :key="index">
+          <div
+            v-for="(item, index) in props.items"
+            :key="index + '.' + item.id"
+          >
             <ArticleItem :article="item" />
           </div>
         </div>
@@ -18,16 +24,17 @@ import ArticleItem from "~/components/article/ArticleItem.vue";
 const { locale } = useI18n();
 const { getRouteByArticleId } = useArticles();
 
-const articles = ref<any[] | undefined>([]);
-
-const { data: items } = await useAsyncData(() =>
-  queryCollection("articles")
+const getArticles = async () => {
+  const items = await queryCollection("articles")
     .where("stem", "LIKE", locale.value + "/%")
     .order("updatedAt", "DESC")
-    .all()
-);
-articles.value = items.value?.map((it) => it || undefined) || [];
-for (const article of articles.value || []) {
-  article.to = getRouteByArticleId(article.id);
-}
+    .all();
+  for (const item of items || []) {
+    item.route = getRouteByArticleId(item.id) || "";
+  }
+  return items || [];
+};
+const { data: articles } = await useAsyncData(() => getArticles(), {
+  watch: [locale],
+});
 </script>

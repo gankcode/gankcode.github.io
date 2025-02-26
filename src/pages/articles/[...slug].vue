@@ -39,34 +39,36 @@
 </template>
 
 <script setup>
+const { locale } = useI18n();
 const { getArticleIdByRoute } = useArticles();
-
-const previous = ref(null);
-const next = ref(null);
-const article = ref(null);
 
 const pageId = getArticleIdByRoute();
 
-const { data: cur } = await useAsyncData(() =>
+const { data: article } = await useAsyncData(() =>
   queryCollection("articles").where("id", "=", pageId).limit(1).first()
 );
-const { data: left } = await useAsyncData(() =>
+
+const { data: previous } = await useAsyncData(() =>
   queryCollection("articles")
-    .where("updatedAt", "<", cur.value.updatedAt)
+    .where("stem", "LIKE", locale.value + "/%")
+    .andWhere((query) => {
+      query.where("updatedAt", "<", article.value.updatedAt);
+    })
     .order("updatedAt", "DESC")
     .limit(1)
     .first()
 );
-const { data: right } = await useAsyncData(() =>
+
+const { data: next } = await useAsyncData(() =>
   queryCollection("articles")
-    .where("updatedAt", ">", cur.value.updatedAt)
+    .where("stem", "LIKE", locale.value + "/%")
+    .andWhere((query) => {
+      query.where("updatedAt", ">", article.value.updatedAt);
+    })
     .order("updatedAt", "ASC")
     .limit(1)
     .first()
 );
-article.value = cur.value;
-previous.value = left.value;
-next.value = right.value;
 
 useSeoMeta({
   title: article.value?.title,

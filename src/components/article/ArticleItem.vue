@@ -1,7 +1,7 @@
 <template>
   <Card
     class="w-[96vw] max-w-[1020px] mx-[2vw] my-2 dark:bg-gray-800 cursor-pointer overflow-hidden"
-    @click="$router.push(article?.to)"
+    @click="$router.push(article?.route)"
   >
     <template #title>
       <div class="flex flex-wrap justify-between">

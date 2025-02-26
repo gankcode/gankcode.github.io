@@ -5,8 +5,8 @@
   "scripts": {
     "postinstall": "nuxt prepare",
     "dev": "nuxt dev -o --qr --public",
-    "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "generate": "nuxt generate",
     "build": "nuxt build",
     "build:ghp": "npx nuxt build --preset github_pages",
     "deploy:ghp": "npx gh-pages -d github_pages/.output/public",
