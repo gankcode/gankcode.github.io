@@ -19,6 +19,7 @@ export const useFormat = () => {
   };
 
   const fromNow = (date: string | Date | undefined | null) => {
+    moment.locale(locale.value);
     return moment(date || new Date()).fromNow();
   };
 

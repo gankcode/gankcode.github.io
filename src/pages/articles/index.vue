@@ -24,17 +24,23 @@ import ArticleItem from "~/components/article/ArticleItem.vue";
 const { locale } = useI18n();
 const { getRouteByArticleId } = useArticles();
 
-const getArticles = async () => {
-  const items = await queryCollection("articles")
-    .where("stem", "LIKE", locale.value + "/%")
-    .order("updatedAt", "DESC")
-    .all();
-  for (const item of items || []) {
-    item.route = getRouteByArticleId(item.id) || "";
+const { data: articles } = await useAsyncData(
+  () =>
+    queryCollection("articles")
+      .where("stem", "LIKE", locale.value + "/%")
+      .order("updatedAt", "DESC")
+      .all(),
+  {
+    lazy: true,
+    deep: true,
+    watch: [locale],
+    dedupe: "cancel",
+    transform: (data) => {
+      for (const item of data || []) {
+        item.route = getRouteByArticleId(item.id) || "";
+      }
+      return data || [];
+    },
   }
-  return items || [];
-};
-const { data: articles } = await useAsyncData(() => getArticles(), {
-  watch: [locale],
-});
+);
 </script>
