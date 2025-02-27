@@ -5,7 +5,7 @@
       class="flex row text-nowrap"
       icon="pi pi-language"
       variant="text"
-      @click="router.push(toggleLocalePath)"
+      @click="toggleLocalePath"
     />
     <Button
       v-else
@@ -21,12 +21,7 @@
           class="flex row items-center text-nowrap w-full"
           :label="lang.label"
           variant="text"
-          @click="
-            () => {
-              router.push(switchLocalePath(lang.code));
-              popover.hide();
-            }
-          "
+          @click="lang.onSelect"
         />
       </div>
     </Popover>
@@ -36,18 +31,23 @@
 <script lang="ts" setup>
 const { locale, locales } = useI18n();
 const router = useRouter();
+const switchLocalePath = useSwitchLocalePath();
 
 const popover = ref();
-
-const switchLocalePath = useSwitchLocalePath();
-const toggleLocalePath = computed(() => {
-  const i = locales.value.find((i) => i.code !== locale.value);
-  return i?.code ? switchLocalePath(i?.code) : "";
-});
 
 const name = computed(() => {
   return locales.value.find((i) => i.code === locale.value)?.name || "";
 });
+
+const toggleLocaleCode = computed(() => {
+  const i = locales.value.find((i) => i.code !== locale.value);
+  return i?.code || locale.value;
+});
+
+const toggleLocalePath = () => {
+  const toggleCode = toggleLocaleCode.value;
+  router.push(switchLocalePath(toggleCode));
+};
 
 const langs = computed(() => {
   return locales.value.map((i) => {
@@ -56,9 +56,11 @@ const langs = computed(() => {
       label: i.name || i.code,
       color: locale.value === i.code ? "primary" : "neutral",
       onSelect: () => {
+        popover.value.hide();
         router.push(switchLocalePath(i.code));
       },
       click: () => {
+        popover.value.hide();
         router.push(switchLocalePath(i.code));
       },
     };

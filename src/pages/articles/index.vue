@@ -21,6 +21,7 @@
 <script setup lang="ts">
 import ArticleItem from "~/components/article/ArticleItem.vue";
 
+const route = useRoute();
 const { locale } = useI18n();
 const { getRouteByArticleId } = useArticles();
 
@@ -33,7 +34,7 @@ const { data: articles } = await useAsyncData(
   {
     lazy: true,
     deep: true,
-    watch: [locale],
+    watch: [locale, route],
     dedupe: "cancel",
     transform: (data) => {
       for (const item of data || []) {
