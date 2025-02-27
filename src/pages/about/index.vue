@@ -7,17 +7,17 @@
 <script lang="ts" setup>
 const { locale } = useI18n();
 
-const route = useRoute();
-
 const { data: content } = await useAsyncData(
   () =>
     queryCollection("about")
       .where("stem", "LIKE", locale.value + "/%")
-      .first(),
+      .first()
+      .catch((err) => {
+        console.error(err);
+      }),
   {
     lazy: true,
     deep: true,
-    watch: [locale, route],
     dedupe: "cancel",
   }
 );

@@ -45,7 +45,13 @@ const { getArticleIdByRoute } = useArticles();
 const pageId = getArticleIdByRoute();
 
 const { data: article } = await useAsyncData(() =>
-  queryCollection("articles").where("id", "=", pageId).limit(1).first()
+  queryCollection("articles")
+    .where("id", "=", pageId)
+    .limit(1)
+    .first()
+    .catch((err) => {
+      console.error(err);
+    })
 );
 
 const { data: previous } = await useAsyncData(() =>
@@ -57,6 +63,9 @@ const { data: previous } = await useAsyncData(() =>
     .order("updatedAt", "DESC")
     .limit(1)
     .first()
+    .catch((err) => {
+      console.error(err);
+    })
 );
 
 const { data: next } = await useAsyncData(() =>
@@ -68,6 +77,9 @@ const { data: next } = await useAsyncData(() =>
     .order("updatedAt", "ASC")
     .limit(1)
     .first()
+    .catch((err) => {
+      console.error(err);
+    })
 );
 
 useSeoMeta({

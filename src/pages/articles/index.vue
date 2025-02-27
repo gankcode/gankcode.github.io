@@ -21,7 +21,6 @@
 <script setup lang="ts">
 import ArticleItem from "~/components/article/ArticleItem.vue";
 
-const route = useRoute();
 const { locale } = useI18n();
 const { getRouteByArticleId } = useArticles();
 
@@ -30,12 +29,13 @@ const { data: articles } = await useAsyncData(
     queryCollection("articles")
       .where("stem", "LIKE", locale.value + "/%")
       .order("updatedAt", "DESC")
-      .all(),
+      .all()
+      .catch((err) => {
+        console.error(err);
+      }),
   {
     lazy: true,
     deep: true,
-    watch: [locale, route],
-    dedupe: "cancel",
     transform: (data) => {
       for (const item of data || []) {
         item.route = getRouteByArticleId(item.id) || "";

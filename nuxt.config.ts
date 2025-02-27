@@ -5,7 +5,13 @@ import appconfig from "./site.config";
 
 export default defineNuxtConfig({
   compatibilityDate: "2025-02-19",
-  devtools: { enabled: true },
+  devtools: {
+    enabled: true,
+
+    timeline: {
+      enabled: true,
+    },
+  },
   nitro: {
     prerender: {
       crawlLinks: true,
