@@ -26,7 +26,7 @@
     </q-page-container>
 
     <q-footer
-      class="shadow-md dark:shadow-gray-300"
+      class="bg-transparent shadow-md dark:shadow-gray-300"
       :style="{
         height: $env.style.footer.height,
       }"

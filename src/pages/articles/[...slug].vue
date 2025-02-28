@@ -1,13 +1,13 @@
 <template>
-  <div class="w-full h-full flex justify-center items-center p-8">
+  <div class="w-full h-full flex justify-center items-center p-4">
     <template v-if="article">
       <div
-        class="w-full h-full flex flex-col gap-8 items-center justify-center"
+        class="w-full h-full flex flex-col gap-4 items-center justify-center"
       >
         <img
           v-if="article.cover"
           :src="article.cover"
-          class="object-cover object-center"
+          class="object-contain w-full max-h-[30vh]"
           :alt="article.title"
         />
         <ContentRenderer
@@ -45,11 +45,9 @@ const { locale } = useI18n();
 const { computedTitle } = useWindow();
 const { getArticleIdByRoute } = useArticles();
 
-const pageId = getArticleIdByRoute();
-
 const { data: article } = await useAsyncData(() =>
   queryCollection("articles")
-    .where("id", "=", pageId)
+    .where("id", "=", getArticleIdByRoute())
     .limit(1)
     .first()
     .catch((err) => {

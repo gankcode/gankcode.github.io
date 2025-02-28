@@ -6,7 +6,7 @@
     <q-card-section>
       <div class="flex flex-wrap items-center justify-between">
         <div
-          class="text-xl font-bold text-blue-900 underline underline-offset-4 hover:text-cyan-500"
+          class="text-xl font-bold text-pink-700 underline underline-offset-4 hover:text-cyan-500"
         >
           {{ article?.title }}
         </div>
@@ -28,12 +28,12 @@
         <div class="md:shrink-0">
           <img
             v-if="article?.cover"
-            class="h-48 w-full object-cover md:h-full md:w-64"
+            class="h-48 w-full md:h-full md:w-64 object-contain"
             :src="article?.cover"
             :alt="article?.title"
           />
         </div>
-        <div class="p-8">
+        <div class="p-2">
           <ContentRenderer
             :prose="true"
             v-if="article?.excerpt"

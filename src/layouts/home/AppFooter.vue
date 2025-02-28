@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex h-full w-full bg-gradient-to-br from-amber-500 to-pink-500 items-center justify-center"
-  >
+  <div class="flex h-full w-full items-center justify-center">
     <span>
       Copyright © {{ year }} {{ $env.site.host }} All rights reserved.
     </span>

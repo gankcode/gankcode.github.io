@@ -4,17 +4,17 @@
     inline-label
     dense
     no-caps
-    v-model="tab"
+    :model-value="tab"
     :align="align"
     :vertical="vertical"
+    :switch-indicator="vertical"
   >
-    <q-route-tab
+    <q-tab
       v-for="(item, index) in links"
       :key="index"
       :name="item.label"
       :icon="item.icon"
       :label="$t(item.label)"
-      :class="tab == item.label ? 'text-teal-8 dark:text-blue-8' : ''"
       style="justify-content: start"
       @click="item.click"
     />
@@ -78,17 +78,14 @@ const links = ref([
   },
 ]);
 
-const tab = computed({
-  set() {},
-  get() {
-    const page = getPagePathArray()[0];
-    return (
-      links.value.find((it) => {
-        return it.label.indexOf(page) >= 0;
-      })?.label ||
-      links.value[0]?.label ||
-      ""
-    );
-  },
+const tab = computed(() => {
+  const page = getPagePathArray()[0];
+  return (
+    links.value.find((it) => {
+      return it.label.indexOf(page) >= 0;
+    })?.label ||
+    links.value[0]?.label ||
+    ""
+  );
 });
 </script>

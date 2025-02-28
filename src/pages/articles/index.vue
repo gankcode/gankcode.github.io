@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-infinite-scroll @load="load" on>
+    <q-infinite-scroll @load="load">
       <div class="flex flex-col justify-center items-center">
         <div v-for="(item, index) in articles" :key="index + '.' + item.id">
           <ArticleItem :article="item" />
@@ -18,9 +18,11 @@
 <script setup lang="ts">
 import ArticleItem from "~/components/article/ArticleItem.vue";
 
+const route = useRoute();
 const { locale } = useI18n();
 const { getRouteByArticleId } = useArticles();
 const { data: articles } = await useAsyncData(
+  route.path,
   () =>
     queryCollection("articles")
       .where("stem", "LIKE", locale.value + "/%")
@@ -30,8 +32,6 @@ const { data: articles } = await useAsyncData(
         console.error(err);
       }),
   {
-    lazy: true,
-    deep: true,
     transform: (data) => {
       for (const item of data || []) {
         item.route = getRouteByArticleId(item.id) || "";

@@ -1,9 +1,9 @@
 <template>
-  <div class="flex row flex-nowrap">
+  <div class="flex row flex-nowrap items-center">
     <img
       :src="$env.site.logo"
       :alt="$env.site.logo"
-      class="hidden md:flex mx-1 rounded-full outline-2 outline-offset-1 outline-cyan-500 h-[32px] w-[32px]"
+      class="hidden md:flex h-[24px] w-[24px] mr-2 rounded-full outline-2 outline-offset-1 outline-cyan-500"
     />
     <NuxtLinkLocale
       to="/"

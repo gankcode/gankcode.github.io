@@ -3,12 +3,12 @@
     <div class="flex row flex-nowrap items-center">
       <AppTitle class="ml-2" />
       <q-btn
-        class="text-nowrap flex md:hidden"
+        class="text-nowrap flex md:hidden font-bold"
         flat
         dense
         padding="8px"
         color="primary"
-        icon="bi-list"
+        icon="las la-bars"
         @click="isNaviDrawerOpen = !isNaviDrawerOpen"
         :label="$te(breadcrumbRoot) ? $t(breadcrumbRoot) : ''"
       />
