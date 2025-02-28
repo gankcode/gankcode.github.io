@@ -4,26 +4,28 @@
       <div
         class="w-full h-full flex flex-col gap-8 items-center justify-center"
       >
-        <Image
+        <img
           v-if="article.cover"
           :src="article.cover"
           class="object-cover object-center"
           :alt="article.title"
         />
         <ContentRenderer
-          class="prose max-w-[1080px]"
+          class="max-w-[1080px]"
           :prose="true"
           :value="article"
         />
-        <div class="flex justify-between">
+        <div class="flex w-full justify-between">
           <div v-if="previous">
             <NuxtLink :to="`/articles/${previous?.id}`">
-              <Button label="Previous" severity="secondary" />
+              {{ previous?.title }}
+              <q-btn :label="$t('articles.previous')" />
             </NuxtLink>
           </div>
           <div v-if="next">
             <NuxtLink :to="`/articles/${next?.id}`">
-              <Button label="Next" severity="secondary" />
+              {{ next?.title }}
+              <q-btn :label="$t('articles.next')" />
             </NuxtLink>
           </div>
         </div>
@@ -38,8 +40,9 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 const { locale } = useI18n();
+const { computedTitle } = useWindow();
 const { getArticleIdByRoute } = useArticles();
 
 const pageId = getArticleIdByRoute();
@@ -57,9 +60,7 @@ const { data: article } = await useAsyncData(() =>
 const { data: previous } = await useAsyncData(() =>
   queryCollection("articles")
     .where("stem", "LIKE", locale.value + "/%")
-    .andWhere((query) => {
-      query.where("updatedAt", "<", article.value.updatedAt);
-    })
+    .where("updatedAt", "<", article.value?.updatedAt)
     .order("updatedAt", "DESC")
     .limit(1)
     .first()
@@ -71,9 +72,7 @@ const { data: previous } = await useAsyncData(() =>
 const { data: next } = await useAsyncData(() =>
   queryCollection("articles")
     .where("stem", "LIKE", locale.value + "/%")
-    .andWhere((query) => {
-      query.where("updatedAt", ">", article.value.updatedAt);
-    })
+    .where("updatedAt", "<", article.value?.updatedAt)
     .order("updatedAt", "ASC")
     .limit(1)
     .first()
@@ -81,6 +80,10 @@ const { data: next } = await useAsyncData(() =>
       console.error(err);
     })
 );
+
+useHead(() => ({
+  titleTemplate: computedTitle(article.value?.title),
+}));
 
 useSeoMeta({
   title: article.value?.title,

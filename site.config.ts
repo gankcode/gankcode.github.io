@@ -1,4 +1,3 @@
-import type { _height } from "#tailwind-config/theme";
 import fs from "fs";
 
 const cname = fs.readFileSync("CNAME", "utf8");
@@ -7,6 +6,7 @@ export default {
   site: {
     host: cname,
     url: "https://" + cname,
+    logo: "https://github.com/robotism.png",
     github: "https://github.com/robotism",
   },
   style: {
@@ -32,7 +32,6 @@ export default {
   authors: {
     Robotism: {
       name: "Robotism",
-      desc: "全栈开发者",
       avatar: "https://github.com/robotism.png",
       socials: {
         github: "https://github.com/robotism",

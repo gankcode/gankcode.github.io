@@ -2,26 +2,33 @@
   <div class="min-h-screen min-w-screen">
     <NuxtRouteAnnouncer />
     <NuxtLoadingIndicator />
-    <NuxtLayout :name="layout">
+    <NuxtLayout name="home">
       <NuxtPage />
     </NuxtLayout>
   </div>
 </template>
 
-<script setup>
-const { getPagePathArray } = useLocalePage();
+<script lang="ts" setup>
 const router = useRouter();
-const { t } = useI18n();
-const { layout } = useLayout();
+const { computedTitle } = useWindow();
 
 const { start, finish } = useLoadingIndicator({
   duration: 300,
   throttle: 0,
 });
 
+const beforeRoute = (to: any, from: any, next: any) => {
+  start();
+  next();
+};
+
+const afterRoute = (to: any, from: any) => {
+  finish();
+};
+
 onMounted(() => {
-  router.beforeEach(start);
-  router.afterEach(finish);
+  router.beforeEach(beforeRoute);
+  router.afterEach(afterRoute);
 });
 
 onUnmounted(() => {
@@ -29,11 +36,7 @@ onUnmounted(() => {
   router.afterEach(() => {});
 });
 
-useHead({
-  // or as a function
-  titleTemplate: () => {
-    const root = getPagePathArray()[0];
-    return root ? t("nav." + root) : t("nav.home");
-  },
-});
+useHead(() => ({
+  titleTemplate: computedTitle(),
+}));
 </script>

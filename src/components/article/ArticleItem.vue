@@ -1,59 +1,57 @@
 <template>
-  <Card
+  <q-card
     class="w-[96vw] max-w-[1020px] mx-[2vw] my-2 dark:bg-gray-800 cursor-pointer overflow-hidden"
     @click="$router.push(article?.route)"
   >
-    <template #title>
-      <div class="flex flex-wrap justify-between">
-        <div class="text-blue-500 underline underline-offset-8 text-nowrap">
+    <q-card-section>
+      <div class="flex flex-wrap items-center justify-between">
+        <div
+          class="text-xl font-bold text-blue-900 underline underline-offset-4 hover:text-cyan-500"
+        >
           {{ article?.title }}
         </div>
         <div class="flex flex-row">
-          <Tag
-            class="m-1 text-xs"
-            size="xs"
-            severity="warn"
-            :value="$fmt?.fromNow?.(article.updatedAt)"
-          />
-          <Tag
-            class="m-1 text-xs"
-            size="xs"
-            severity="secondary"
-            :value="$fmt?.localDate?.(article.updatedAt, 'YYYY-MM-DD HH:mm')"
-          />
+          <q-chip color="secondary" text-color="white" icon="alarm" clickable>
+            {{ $fmt?.fromNow?.(article.updatedAt) }}
+          </q-chip>
+          <q-chip color="secondary" text-color="white" icon="event" clickable>
+            {{ $fmt?.localDate?.(article.updatedAt, "YYYY-MM-DD HH:mm") }}
+          </q-chip>
         </div>
       </div>
-    </template>
-    <template #subtitle>
-      <div class="text-sm">
-        {{ article?.description }}
-      </div>
-    </template>
-    <template #content>
-      <div class="w-full flex flex-wrap md:flex-row justify-center">
-        <div class="max-w-[240px] mr-6">
-          <Image
+    </q-card-section>
+    <div class="mx-4">
+      <q-separator />
+    </div>
+    <q-card-section>
+      <div class="md:flex">
+        <div class="md:shrink-0">
+          <img
             v-if="article?.cover"
-            :alt="article?.title"
+            class="h-48 w-full object-cover md:h-full md:w-64"
             :src="article?.cover"
+            :alt="article?.title"
           />
         </div>
-        <ContentRenderer
-          class="prose prose-sm"
-          :prose="true"
-          v-if="article?.excerpt"
-          :value="article?.excerpt"
-        />
+        <div class="p-8">
+          <ContentRenderer
+            :prose="true"
+            v-if="article?.excerpt"
+            :value="article?.excerpt"
+          />
+        </div>
       </div>
-    </template>
-    <template #footer>
+    </q-card-section>
+    <q-card-section>
       <div class="flex flex-row">
         <div v-for="(tag, index) in article?.tags" :key="index">
-          <Tag class="m-1" size="sm" severity="info" :value="tag" />
+          <q-chip color="teal" text-color="white" icon="bi-tag" clickable>
+            {{ tag }}
+          </q-chip>
         </div>
       </div>
-    </template>
-  </Card>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script lang="ts" setup>

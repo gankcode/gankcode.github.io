@@ -1,20 +1,17 @@
 <template>
   <div>
-    <DataView
-      :value="articles?.map?.((it) => it || undefined) || []"
-      data-key="id"
-    >
-      <template #list="props">
-        <div class="flex flex-col justify-center items-center">
-          <div
-            v-for="(item, index) in props.items"
-            :key="index + '.' + item.id"
-          >
-            <ArticleItem :article="item" />
-          </div>
+    <q-infinite-scroll @load="load" on>
+      <div class="flex flex-col justify-center items-center">
+        <div v-for="(item, index) in articles" :key="index + '.' + item.id">
+          <ArticleItem :article="item" />
+        </div>
+      </div>
+      <template v-slot:loading>
+        <div class="row justify-center q-my-md">
+          <q-spinner-dots color="primary" size="40px" />
         </div>
       </template>
-    </DataView>
+    </q-infinite-scroll>
   </div>
 </template>
 
@@ -23,7 +20,6 @@ import ArticleItem from "~/components/article/ArticleItem.vue";
 
 const { locale } = useI18n();
 const { getRouteByArticleId } = useArticles();
-
 const { data: articles } = await useAsyncData(
   () =>
     queryCollection("articles")
@@ -44,4 +40,8 @@ const { data: articles } = await useAsyncData(
     },
   }
 );
+
+const load = (index: number, done: () => void) => {
+  done();
+};
 </script>

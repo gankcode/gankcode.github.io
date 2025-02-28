@@ -1,9 +1,9 @@
 <template>
-  <div class="flex row items-center">
-    <Image
-      src="https://github.com/robotism.png"
-      alt="logo"
-      class="hidden md:flex mx-2 rounded-full outline-2 outline-offset-1 outline-cyan-500 h-[32px] w-[32px]"
+  <div class="flex row flex-nowrap">
+    <img
+      :src="$env.site.logo"
+      :alt="$env.site.logo"
+      class="hidden md:flex mx-1 rounded-full outline-2 outline-offset-1 outline-cyan-500 h-[32px] w-[32px]"
     />
     <NuxtLinkLocale
       to="/"

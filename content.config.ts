@@ -15,7 +15,6 @@ export default defineContentConfig({
         category: z.array(z.string()),
         tags: z.array(z.string()),
         cover: z.string(),
-        locale: z.string(),
         createdAt: z.date(),
         updatedAt: z.date(),
         route: z.string(),
@@ -37,7 +36,6 @@ export default defineContentConfig({
         category: z.array(z.string()),
         tags: z.array(z.string()),
         cover: z.string(),
-        locale: z.string(),
         createdAt: z.date(),
         updatedAt: z.date(),
         excerpt: z.object({
@@ -59,7 +57,6 @@ export default defineContentConfig({
         category: z.array(z.string()),
         tags: z.array(z.string()),
         cover: z.string(),
-        locale: z.string(),
         createdAt: z.date(),
         updatedAt: z.date(),
         excerpt: z.object({

@@ -1,6 +1,6 @@
 ---
 author: ["Robotism"]
-locale: en
+
 category: ["about"]
 tags: ["about"]
 title: About

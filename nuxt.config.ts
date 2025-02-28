@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import Aura from "@primeuix/themes/aura";
+import tailwindcss from "@tailwindcss/vite";
 
 import appconfig from "./site.config";
 
@@ -7,10 +7,12 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-02-19",
   devtools: {
     enabled: true,
-
     timeline: {
       enabled: true,
     },
+  },
+  vite: {
+    plugins: [tailwindcss()],
   },
   nitro: {
     prerender: {
@@ -33,8 +35,10 @@ export default defineNuxtConfig({
     "@nuxt/content",
     "@nuxt/image",
     "@vueuse/nuxt",
-    "@primevue/nuxt-module",
     "@nuxt/ui",
+    "nuxt-quasar-ui",
+    "@nuxtjs/color-mode",
+    "@nuxt/icon",
   ],
   srcDir: "src/",
   routeRules: {
@@ -42,16 +46,6 @@ export default defineNuxtConfig({
   },
   site: {
     url: appconfig.site.url,
-  },
-  app: {
-    pageTransition: {
-      name: "fade",
-      mode: "out-in", // default
-    },
-    layoutTransition: {
-      name: "fade",
-      mode: "out-in", // default
-    },
   },
   colorMode: {
     preference: "system", // default value of $colorMode.preference
@@ -66,7 +60,6 @@ export default defineNuxtConfig({
       stylistic: {
         indent: "tab",
         semi: true,
-        // ...
       },
     },
   },
@@ -87,17 +80,18 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
+    baseUrl: appconfig.site.url,
     strategy: "prefix_and_default",
     locales: [
       {
         code: "en",
         name: "English",
-        file: "en-US.ts",
+        files: ["en-US.ts"],
       },
       {
         code: "zh",
         name: "中文",
-        file: "zh-CN.ts",
+        files: ["zh-CN.ts"],
       },
     ],
     detectBrowserLanguage: {
@@ -108,29 +102,38 @@ export default defineNuxtConfig({
     defaultLocale: `en`,
     lazy: true,
   },
-  css: ["~/app.css"],
-  tailwindcss: {
-    cssPath: ["~/app.css", { injectPosition: "first" }],
-    config: {},
-    viewer: true,
-    exposeConfig: false,
+  css: ["~/assets/css/app.css"],
+  quasar: {
+    lang: "en-US",
+    plugins: [
+      "Dark",
+      "Notify",
+      "Dialog",
+      "Loading",
+      "LoadingBar",
+      "BottomSheet",
+      "AppVisibility",
+      "AppFullscreen",
+      "LocalStorage",
+      "SessionStorage",
+    ],
+    extras: {
+      animations: "all",
+      font: "roboto-font",
+      fontIcons: [
+        "bootstrap-icons",
+        "ionicons-v4",
+        "line-awesome",
+        "material-icons",
+        "material-icons-outlined",
+        "material-icons-round",
+        "material-icons-sharp",
+        "material-symbols-outlined",
+        "material-symbols-rounded",
+        "material-symbols-sharp",
+        "mdi-v7",
+        "themify",
+      ],
+    },
   },
-  primevue: {
-    options: {
-      theme: {
-        preset: Aura,
-        options: {
-          darkModeSelector: ".dark",
-        },
-      },
-    },
-    composables: {
-      include: ["*"],
-      exclude: ["useToast"],
-    },
-    directives: {
-      include: "*",
-    },
-  },
-  content: {},
 });

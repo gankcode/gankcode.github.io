@@ -1,6 +1,8 @@
 import moment from "moment";
 import "moment/dist/locale/zh-cn";
 
+import quasarLangZh from "quasar/lang/zh-CN.js";
+
 if (!moment.locales().includes("zh")) {
   moment.defineLocale("zh", {
     parentLocale: "zh-cn",
@@ -23,11 +25,17 @@ export default defineI18nLocale(async (locale) => {
       readMore: "阅读更多",
       notFound: "页面不存在",
       noContent: "哎呀! 您访问的页面不存在。",
+      previous: "上一篇",
+      next: "下一篇",
     },
     tools: {
+      search: "搜索",
       online: "在线工具",
       regex: "正则表达式",
       certinfo: "证书信息",
+    },
+    quasar: {
+      ...quasarLangZh,
     },
     ...useRuntimeConfig().public.locales[locale],
   };

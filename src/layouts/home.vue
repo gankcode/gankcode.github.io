@@ -1,39 +1,42 @@
 <template>
-  <div class="min-h-screen min-w-screen">
-    <header>
-      <AppHeader
-        class="fixed w-full top-0 z-50 backdrop-blur-md"
-        :style="{
-          height: $env.style.header.height,
-        }"
-      />
-      <AppHeader
-        class="invisible"
-        :style="{
-          height: $env.style.header.height,
-        }"
-      />
-    </header>
+  <q-layout view="hhh lpr fff" class="min-h-screen min-w-screen">
+    <q-header
+      class="fixed w-full top-0 bg-transparent backdrop-blur-2xl shadow-md dark:shadow-gray-800"
+      :style="{
+        paddingTop: $env.style.header.height,
+      }"
+    />
+    <q-header
+      class="fixed w-full top-0 z-top bg-transparent"
+      :style="{
+        height: $env.style.header.height,
+      }"
+    >
+      <AppHeader />
+    </q-header>
 
-    <main>
-      <AppMain
+    <q-page-container>
+      <q-page
         :style="{
           minHeight: `calc(100vh - ${$env.style.header.height} - ${$env.style.footer.height})`,
         }"
-      />
-    </main>
+      >
+        <AppMain />
+      </q-page>
+    </q-page-container>
 
-    <footer>
-      <AppFooter
-        :style="{
-          height: $env.style.footer.height,
-        }"
-      />
-    </footer>
-  </div>
+    <q-footer
+      class="shadow-md dark:shadow-gray-300"
+      :style="{
+        height: $env.style.footer.height,
+      }"
+    >
+      <AppFooter />
+    </q-footer>
+  </q-layout>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import AppHeader from "~/layouts/home/AppHeader.vue";
 import AppMain from "~/layouts/home/AppMain.vue";
 import AppFooter from "~/layouts/home/AppFooter.vue";

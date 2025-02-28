@@ -1,0 +1,25 @@
+/* tailwind css */
+@custom-variant dark (&:where(.dark-mode, .dark-mode *));
+.dark-mode body {
+  --ui-bg: black;
+  --ui-text: white;
+}
+
+/* color mode */
+.dark-mode body {
+  background-color: black;
+  color: white;
+}
+
+/* nuxt ui */
+:root {
+  --ui-primary: #ff69b4;
+  --ui-secondary: #f783d0;
+}
+
+/* quasar ui*/
+.body--dark {
+  --q-primary: #ff69b4;
+  --q-secondary: #f783d0;
+  --q-accent: #f540ff;
+}

@@ -1,42 +1,63 @@
 <template>
   <div class="flex flex-row items-center" v-if="locales.length > 1">
-    <Button
+    <q-btn
       v-if="locales.length == 2"
+      color="primary"
+      dense
+      flat
+      padding="8px"
       class="flex row text-nowrap"
-      icon="pi pi-language"
-      variant="text"
+      icon="bi-translate"
       @click="toggleLocalePath"
     />
-    <Button
+    <q-btn-dropdown
       v-else
-      class="flex row text-nowrap"
-      icon="pi pi-language"
+      v-ripple.early
+      dense
+      flat
+      padding="8px"
+      color="primary"
+      icon="bi-translate"
       :label="name"
-      variant="text"
-      @click="popover.show($event)"
-    />
-    <Popover ref="popover">
-      <div v-for="(lang, index) in langs" :key="index">
-        <Button
-          class="flex row items-center text-nowrap w-full"
-          :label="lang.label"
-          variant="text"
-          @click="lang.onSelect"
-        />
-      </div>
-    </Popover>
+    >
+      <q-list>
+        <div v-for="(lang, index) in langs" :key="index">
+          <q-item clickable v-close-popup @click="lang.onSelect()">
+            <q-item-section>
+              <q-item-label>{{ lang.label }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </div>
+      </q-list>
+    </q-btn-dropdown>
   </div>
 </template>
 
 <script lang="ts" setup>
-const { locale, locales } = useI18n();
+const { locale, locales, messages } = useI18n();
 const router = useRouter();
 const switchLocalePath = useSwitchLocalePath();
 
-const popover = ref();
+import { Lang, type QuasarLanguage } from "quasar";
 
 const name = computed(() => {
   return locales.value.find((i) => i.code === locale.value)?.name || "";
+});
+
+const langs = computed(() => {
+  return locales.value.map((i) => {
+    return {
+      code: i.code,
+      label: i.name || i.code,
+      color: locale.value === i.code ? "primary" : "neutral",
+      onSelect: () => {
+        router.push(switchLocalePath(i.code));
+      },
+      click: () => {
+        router.push(switchLocalePath(i.code));
+      },
+    };
+  });
 });
 
 const toggleLocaleCode = computed(() => {
@@ -49,21 +70,19 @@ const toggleLocalePath = () => {
   router.push(switchLocalePath(toggleCode));
 };
 
-const langs = computed(() => {
-  return locales.value.map((i) => {
-    return {
-      code: i.code,
-      label: i.name || i.code,
-      color: locale.value === i.code ? "primary" : "neutral",
-      onSelect: () => {
-        popover.value.hide();
-        router.push(switchLocalePath(i.code));
-      },
-      click: () => {
-        popover.value.hide();
-        router.push(switchLocalePath(i.code));
-      },
-    };
-  });
+const updateQuasarLang = () => {
+  const message = messages.value[locale.value];
+  Lang.set(message?.quasar as QuasarLanguage);
+};
+
+watch(
+  () => locale.value,
+  () => {
+    updateQuasarLang();
+  }
+);
+
+onMounted(() => {
+  updateQuasarLang();
 });
 </script>
