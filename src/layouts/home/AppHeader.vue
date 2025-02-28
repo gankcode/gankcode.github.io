@@ -14,9 +14,7 @@
       />
     </div>
 
-    <div class="w-auto items-center hidden md:flex">
-      <AppNavi />
-    </div>
+    <AppNavi class="w-auto items-center hidden md:flex" />
 
     <q-drawer overlay v-model="isNaviDrawerOpen" :breakpoint="99999">
       <q-card

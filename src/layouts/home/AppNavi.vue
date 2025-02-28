@@ -1,12 +1,14 @@
 <template>
   <q-tabs
-    class="text-teal mx-1"
-    inline-label
+    class="text-pink-700 mx-1"
     dense
+    shrink
     no-caps
+    stretch
     :model-value="tab"
     :align="align"
     :vertical="vertical"
+    :inline-label="vertical"
     :switch-indicator="vertical"
   >
     <q-tab
@@ -89,3 +91,16 @@ const tab = computed(() => {
   );
 });
 </script>
+
+<style scoped>
+.light-mode {
+  .q-tab--active {
+    background-color: rgba(127, 127, 127, 0.25);
+  }
+}
+.dark-mode {
+  .q-tab--active {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+}
+</style>
