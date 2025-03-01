@@ -9,7 +9,11 @@
         </NuxtLayout>
       </div>
     </template>
-    <template #fallback> Loading... </template>
+    <template #fallback>
+      <div class="h-screen w-screen flex justify-center items-center">
+        <q-spinner-bars color="primary" size="4em" />
+      </div>
+    </template>
   </Suspense>
 </template>
 
