@@ -29,13 +29,13 @@ export default {
       },
     },
   },
-  authors: {
-    Robotism: {
+  authors: [
+    {
       name: "Robotism",
       avatar: "https://github.com/robotism.png",
       socials: {
         github: "https://github.com/robotism",
       },
     },
-  },
+  ],
 };

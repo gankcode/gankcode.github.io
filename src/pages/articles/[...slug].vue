@@ -23,14 +23,25 @@ const { getRouteByArticleId, getArticlePathByRoute } = useArticles();
 
 const { data: articles } = await useAsyncData(
   route.path,
-  () =>
-    queryCollection("articles")
-      .where("stem", "LIKE", getArticlePathByRoute() + "/%")
-      .order("updatedAt", "DESC")
-      .all()
-      .catch((err) => {
-        console.error(err);
-      }),
+  async () => {
+    const query = queryCollection("articles").where(
+      "stem",
+      "LIKE",
+      getArticlePathByRoute() + "/%"
+    );
+
+    if (typeof route.query?.tags === "string") {
+      const tags = (route.query.tags as string).split(",");
+      for (const tag of tags) {
+        query.where("tags", "LIKE", '%"' + tag + '"%');
+      }
+    }
+    try {
+      return await query.order("updatedAt", "DESC").all();
+    } catch (err) {
+      console.error(err);
+    }
+  },
   {
     transform: (data) => {
       for (const item of data || []) {
@@ -38,6 +49,8 @@ const { data: articles } = await useAsyncData(
       }
       return data || [];
     },
+    watch: [route],
+    deep: true,
   }
 );
 

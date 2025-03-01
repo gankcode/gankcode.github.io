@@ -34,32 +34,76 @@
           />
         </div>
         <div class="p-2">
-          <ContentRenderer
-            :prose="true"
-            v-if="article?.excerpt"
-            :value="article?.excerpt"
-          />
+          <MarkdownRender :value="article?.excerpt" />
         </div>
       </div>
     </q-card-section>
     <q-card-section>
       <div class="flex flex-row">
-        <div v-for="(tag, index) in article?.tags" :key="index">
-          <q-chip color="teal" text-color="white" icon="bi-tag" clickable>
-            {{ tag }}
-          </q-chip>
-        </div>
+        <q-chip
+          v-for="(tag, index) in routeTags"
+          :key="index"
+          icon="las la-location-arrow"
+          color="teal-10"
+          text-color="white"
+          clickable
+          @click.stop="$router.push(tag.route)"
+        >
+          {{ tag.tag }}
+        </q-chip>
+        <q-chip
+          v-for="(tag, index) in article?.tags"
+          :key="index"
+          icon="las la-tag"
+          color="lime-10"
+          text-color="white"
+          clickable
+          @click.stop="
+            $router.push({
+              path: route.path,
+              query: {
+                tags: tag,
+              },
+            })
+          "
+        >
+          {{ tag }}
+        </q-chip>
       </div>
     </q-card-section>
   </q-card>
 </template>
 
 <script lang="ts" setup>
+import MarkdownRender from "./MarkdownRender.vue";
+
 const $fmt = useFormat();
+
+const route = useRoute();
+
 const props = defineProps({
   article: {
     type: Object,
     required: true,
   },
+});
+
+const routeTags = computed(() => {
+  const route = props.article?.route || "";
+  const items = route
+    ?.split?.("/")
+    ?.filter?.((i: string) => !!i && i.indexOf(".md") < 0);
+  const prefix = items.slice(0, 2) || [];
+  const tags = items.slice(2) || [];
+  return tags.map((i: string) => {
+    const index = tags.indexOf(i);
+    const routes = [];
+    routes.push(...prefix);
+    routes.push(tags.slice(0, index + 1));
+    return {
+      tag: i,
+      route: "/" + routes.join("/"),
+    };
+  });
 });
 </script>

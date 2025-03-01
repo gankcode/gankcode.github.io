@@ -35,3 +35,12 @@ a {
 p {
   font-size: 1rem;
 }
+
+.prose {
+  a {
+    color: var(--ui-secondary);
+  }
+
+  p {
+  }
+}

@@ -10,11 +10,7 @@
           class="object-contain w-full max-h-[30vh]"
           :alt="article.title"
         />
-        <ContentRenderer
-          class="max-w-[1080px]"
-          :prose="true"
-          :value="article"
-        />
+        <MarkdownRender class="max-w-[1080px]" :value="article" />
         <div class="flex w-full justify-between">
           <div v-if="previous">
             <NuxtLink :to="`/articles/${previous?.id}`">
@@ -41,6 +37,8 @@
 </template>
 
 <script lang="ts" setup>
+import MarkdownRender from "~/components/article/MarkdownRender.vue";
+
 const { locale } = useI18n();
 const { computedTitle } = useWindow();
 const { getArticleIdByRoute } = useArticles();

@@ -8,7 +8,10 @@
       :key="index"
       :label="$te(item.label) ? $t(item.label) : item.label"
       :icon="item.icon"
-      :class="{ 'bg-gray-50': index == menus.length - 1 }"
+      :class="{
+        'bg-gray-100 dark:bg-gray-800': index == menus.length - 1,
+        'hover:bg-gray-200 dark:hover:bg-gray-700': index == menus.length - 1,
+      }"
       class="text-pink cursor-pointer p-1 rounded"
       @click="$router.push(item.to)"
     />
