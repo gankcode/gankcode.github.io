@@ -63,4 +63,10 @@ const tab = computed(() => {
     background-color: rgba(255, 255, 255, 0.25);
   }
 }
+
+::v-deep(.q-tab--active) {
+  .q-tab__label {
+    font-weight: 600 !important;
+  }
+}
 </style>

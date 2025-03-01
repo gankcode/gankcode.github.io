@@ -1,3 +1,4 @@
+/* tailwind css */
 @custom-variant light (&:where(.light-mode, .light-mode *));
 .light-mode body {
   --ui-bg: white;
@@ -12,13 +13,14 @@
 
 /* nuxt ui */
 :root {
-  --ui-primary: #ff69b4;
-  --ui-secondary: #f783d0;
+  --ui-primary: #e91e63;
+  --ui-secondary: #ed4b82;
+  --ui-accent: #a31545;
 }
 
 /* quasar ui */
 .body--light {
-  --q-primary: #ff69b4;
-  --q-secondary: #f783d0;
-  --q-accent: #f540ff;
+  --q-primary: var(--ui-primary);
+  --q-secondary: var(--ui-secondary);
+  --q-accent: var(--ui-accent);
 }

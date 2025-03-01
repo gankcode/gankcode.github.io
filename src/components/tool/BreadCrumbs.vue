@@ -1,5 +1,5 @@
 <template>
-  <q-breadcrumbs class="m-4">
+  <q-breadcrumbs class="mx-1 md:mx-4 my-3">
     <template v-slot:separator>
       <q-icon size="1.5em" name="chevron_right" color="primary" />
     </template>
@@ -12,7 +12,7 @@
         'bg-gray-100 dark:bg-gray-800': index == menus.length - 1,
         'hover:bg-gray-200 dark:hover:bg-gray-700': index == menus.length - 1,
       }"
-      class="text-pink cursor-pointer p-1 rounded"
+      class="text-pink cursor-pointer px-2 py-1 rounded"
       @click="$router.push(item.to)"
     />
   </q-breadcrumbs>

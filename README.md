@@ -1,6 +1,6 @@
-# Nuxt Minimal Starter
+# GankCode website
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+> powered by Nuxt 3, Quasar and TailwindCSS
 
 ## Setup
 
