@@ -1,90 +1,47 @@
 <template>
-  <div class="w-full h-full flex justify-center items-center p-4">
-    <template v-if="article">
-      <div
-        class="w-full h-full flex flex-col gap-4 items-center justify-center"
-      >
-        <img
-          v-if="article.cover"
-          :src="article.cover"
-          class="object-contain w-full max-h-[30vh]"
-          :alt="article.title"
-        />
-        <ContentRenderer
-          class="max-w-[1080px]"
-          :prose="true"
-          :value="article"
-        />
-        <div class="flex w-full justify-between">
-          <div v-if="previous">
-            <NuxtLink :to="`/articles/${previous?.id}`">
-              {{ previous?.title }}
-              <q-btn :label="$t('articles.previous')" />
-            </NuxtLink>
-          </div>
-          <div v-if="next">
-            <NuxtLink :to="`/articles/${next?.id}`">
-              {{ next?.title }}
-              <q-btn :label="$t('articles.next')" />
-            </NuxtLink>
-          </div>
+  <div>
+    <q-infinite-scroll @load="load">
+      <div class="flex flex-col justify-center items-center">
+        <div v-for="(item, index) in articles" :key="index + '.' + item.id">
+          <ArticleItem :article="item" />
         </div>
       </div>
-    </template>
-    <template v-else>
-      <div class="empty-page text-2xl">
-        <h1>{{ $t("articles.notFound") }}</h1>
-        <p>{{ $t("articles.noContent") }}</p>
-      </div>
-    </template>
+      <template v-slot:loading>
+        <div class="row justify-center q-my-md">
+          <q-spinner-dots color="primary" size="40px" />
+        </div>
+      </template>
+    </q-infinite-scroll>
   </div>
 </template>
 
-<script lang="ts" setup>
-const { locale } = useI18n();
-const { computedTitle } = useWindow();
-const { getArticleIdByRoute } = useArticles();
+<script setup lang="ts">
+import ArticleItem from "~/components/article/ArticleItem.vue";
 
-const { data: article } = await useAsyncData(() =>
-  queryCollection("articles")
-    .where("id", "=", getArticleIdByRoute())
-    .limit(1)
-    .first()
-    .catch((err) => {
-      console.error(err);
-    })
+const route = useRoute();
+const { getRouteByArticleId, getArticlePathByRoute } = useArticles();
+
+const { data: articles } = await useAsyncData(
+  route.path,
+  () =>
+    queryCollection("articles")
+      .where("stem", "LIKE", getArticlePathByRoute() + "/%")
+      .order("updatedAt", "DESC")
+      .all()
+      .catch((err) => {
+        console.error(err);
+      }),
+  {
+    transform: (data) => {
+      for (const item of data || []) {
+        item.route = getRouteByArticleId(item.id) || "";
+      }
+      return data || [];
+    },
+  }
 );
 
-const { data: previous } = await useAsyncData(() =>
-  queryCollection("articles")
-    .where("stem", "LIKE", locale.value + "/%")
-    .where("updatedAt", "<", article.value?.updatedAt)
-    .order("updatedAt", "DESC")
-    .limit(1)
-    .first()
-    .catch((err) => {
-      console.error(err);
-    })
-);
-
-const { data: next } = await useAsyncData(() =>
-  queryCollection("articles")
-    .where("stem", "LIKE", locale.value + "/%")
-    .where("updatedAt", "<", article.value?.updatedAt)
-    .order("updatedAt", "ASC")
-    .limit(1)
-    .first()
-    .catch((err) => {
-      console.error(err);
-    })
-);
-
-useHead(() => ({
-  titleTemplate: computedTitle(article.value?.title),
-}));
-
-useSeoMeta({
-  title: article.value?.title,
-  description: article.value?.description,
-});
+const load = (index: number, done: () => void) => {
+  done();
+};
 </script>

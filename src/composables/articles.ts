@@ -12,6 +12,10 @@ export const useArticles = () => {
     }
   };
 
+  const getArticlePathByRoute = (): string => {
+    return getArticleIdByRoute().replace(/^articles\//, "");
+  };
+
   const getRouteByArticleId = (articleId: string) => {
     const routes = articleId.split("/");
     if (routes.length < 2) {
@@ -26,6 +30,7 @@ export const useArticles = () => {
 
   return {
     getArticleIdByRoute,
+    getArticlePathByRoute,
     getRouteByArticleId,
   };
 };
