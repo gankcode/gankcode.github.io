@@ -1,11 +1,16 @@
 <template>
-  <div class="min-h-screen min-w-screen">
-    <NuxtRouteAnnouncer />
-    <NuxtLoadingIndicator />
-    <NuxtLayout name="home">
-      <NuxtPage />
-    </NuxtLayout>
-  </div>
+  <Suspense>
+    <template #default>
+      <div class="min-h-screen min-w-screen">
+        <NuxtRouteAnnouncer />
+        <NuxtLoadingIndicator />
+        <NuxtLayout name="home">
+          <NuxtPage />
+        </NuxtLayout>
+      </div>
+    </template>
+    <template #fallback> Loading... </template>
+  </Suspense>
 </template>
 
 <script lang="ts" setup>

@@ -21,7 +21,6 @@
           minHeight: `calc(100vh - ${$env.style.header.height} - ${$env.style.footer.height})`,
         }"
       >
-        <BreadCrumbs />
         <AppMain />
       </q-page>
     </q-page-container>
@@ -41,6 +40,4 @@
 import AppHeader from "~/layouts/home/AppHeader.vue";
 import AppMain from "~/layouts/home/AppMain.vue";
 import AppFooter from "~/layouts/home/AppFooter.vue";
-
-import BreadCrumbs from "~/components/tool/BreadCrumbs.vue";
 </script>

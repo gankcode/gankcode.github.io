@@ -41,13 +41,29 @@
     <q-card-section>
       <div class="flex flex-row">
         <q-chip
-          v-for="(tag, index) in routeTags"
+          v-for="(tag, index) in articleRouteTags"
           :key="index"
           icon="las la-location-arrow"
-          color="teal-10"
-          text-color="white"
+          color="green-4"
+          :text-color="tag.removable ? 'red' : 'white'"
           clickable
-          @click.stop="$router.push(tag.route)"
+          :removable="tag.removable"
+          @click.stop="
+            $router.push({
+              path: tag.route,
+              query: {
+                ...route.query,
+              },
+            })
+          "
+          @remove="
+            $router.push({
+              path: tag.removedRoute,
+              query: {
+                ...route.query,
+              },
+            })
+          "
         >
           {{ tag.tag }}
         </q-chip>
@@ -55,14 +71,27 @@
           v-for="(tag, index) in article?.tags"
           :key="index"
           icon="las la-tag"
-          color="lime-10"
-          text-color="white"
+          color="blue-4"
+          :text-color="queryTags.includes(tag) ? 'red' : 'white'"
           clickable
+          :removable="queryTags.includes(tag)"
           @click.stop="
             $router.push({
               path: route.path,
               query: {
-                tags: tag,
+                ...route.query,
+                tags: queryTags.includes(tag)
+                  ? queryTags.filter((i) => i !== tag)
+                  : [tag, ...queryTags].join(),
+              },
+            })
+          "
+          @remove="
+            $router.push({
+              path: route.path,
+              query: {
+                ...route.query,
+                tags: queryTags.filter((i) => i !== tag),
               },
             })
           "
@@ -80,6 +109,7 @@ import MarkdownRender from "./MarkdownRender.vue";
 const $fmt = useFormat();
 
 const route = useRoute();
+const { getPagePathArray } = useLocalePage();
 
 const props = defineProps({
   article: {
@@ -88,13 +118,27 @@ const props = defineProps({
   },
 });
 
+const queryTags = computed(() => {
+  return (
+    route.query.tags
+      ?.toString()
+      ?.split?.(",")
+      ?.filter?.((i: string) => !!i) || []
+  );
+});
+
 const routeTags = computed(() => {
+  const route = getPagePathArray(true);
+  return route?.filter?.((i: string) => !!i && !i.endsWith(".md"));
+});
+
+const articleRouteTags = computed(() => {
   const route = props.article?.route || "";
   const items = route
     ?.split?.("/")
-    ?.filter?.((i: string) => !!i && i.indexOf(".md") < 0);
+    ?.filter?.((i: string) => !!i && !i.endsWith(".md"));
   const prefix = items.slice(0, 2) || [];
-  const tags = items.slice(2) || [];
+  const tags = items.slice(prefix.length) || [];
   return tags.map((i: string) => {
     const index = tags.indexOf(i);
     const routes = [];
@@ -103,6 +147,8 @@ const routeTags = computed(() => {
     return {
       tag: i,
       route: "/" + routes.join("/"),
+      removable: routeTags.value.includes(i),
+      removedRoute: "/" + routes.slice(0, prefix.length + index).join("/"),
     };
   });
 });

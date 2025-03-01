@@ -31,7 +31,7 @@ const { data: articles } = await useAsyncData(
     );
 
     if (typeof route.query?.tags === "string") {
-      const tags = (route.query.tags as string).split(",");
+      const tags = (route.query.tags as string).split(",").filter((i) => !!i);
       for (const tag of tags) {
         query.where("tags", "LIKE", '%"' + tag + '"%');
       }
