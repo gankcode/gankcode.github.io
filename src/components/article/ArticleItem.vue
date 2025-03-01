@@ -50,7 +50,9 @@
           :removable="tag.removable"
           @click.stop="
             $router.push({
-              path: tag.route,
+              path: route.path.startsWith(tag.route)
+                ? tag.removedRoute
+                : tag.route,
               query: {
                 ...route.query,
               },
