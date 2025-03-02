@@ -7,11 +7,8 @@
     />
     <NuxtLinkLocale
       to="/"
-      class="cursor-pointer bg-gradient-to-r bg-clip-text text-transparent text-xl font-bold"
-      :class="[
-        'from-amber-500 to-pink-500',
-        'hover:from-pink-500 hover:to-amber-500',
-      ]"
+      class="cursor-pointer text-primary hover:text-secondary text-xl font-bold"
+      style="text-shadow: #fc0 1px 0 10px"
     >
       {{ $t("app.name") }}
     </NuxtLinkLocale>

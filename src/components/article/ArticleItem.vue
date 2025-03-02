@@ -11,10 +11,10 @@
           {{ article?.title }}
         </div>
         <div class="flex flex-row">
-          <q-chip color="secondary" text-color="white" icon="alarm">
+          <q-chip dense color="secondary" text-color="white" icon="alarm">
             {{ $fmt?.fromNow?.(article.updatedAt) }}
           </q-chip>
-          <q-chip color="secondary" text-color="white" icon="event">
+          <q-chip dense color="secondary" text-color="white" icon="event">
             {{ $fmt?.localDate?.(article.updatedAt, "YYYY-MM-DD HH:mm") }}
           </q-chip>
         </div>
@@ -42,6 +42,7 @@
       <div class="flex flex-row">
         <q-chip
           v-for="(tag, index) in articleRouteTags"
+          dense
           :key="index"
           icon="las la-location-arrow"
           color="green-4"
@@ -71,6 +72,7 @@
         </q-chip>
         <q-chip
           v-for="(tag, index) in article?.tags"
+          dense
           :key="index"
           icon="las la-tag"
           color="blue-4"

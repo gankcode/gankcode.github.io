@@ -2,6 +2,8 @@
 
 import appconfig from "./site.config";
 
+import tailwindcss from "@tailwindcss/vite";
+
 export default defineNuxtConfig({
   compatibilityDate: "2025-02-19",
   devtools: {
@@ -10,7 +12,9 @@ export default defineNuxtConfig({
       enabled: true,
     },
   },
-  vite: {},
+  vite: {
+    plugins: [tailwindcss()],
+  },
   nitro: {
     prerender: {
       crawlLinks: true,

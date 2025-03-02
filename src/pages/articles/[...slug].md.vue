@@ -5,23 +5,22 @@
         class="w-full h-full flex flex-col gap-4 items-center justify-center"
       >
         <img
+          class="object-contain w-full max-h-[30vh]"
           v-if="article.cover"
           :src="article.cover"
-          class="object-contain w-full max-h-[30vh]"
           :alt="article.title"
         />
         <MarkdownRender class="max-w-[1080px]" :value="article" />
-        <div class="flex w-full justify-between">
+        <div class="flex w-full justify-between px-2">
           <div v-if="previous">
-            <NuxtLink :to="`/articles/${previous?.id}`">
-              {{ previous?.title }}
-              <q-btn :label="$t('articles.previous')" />
+            <NuxtLink :to="previous?.route">
+              <q-btn :label="$t('articles.previous') + ':' + previous?.title" />
             </NuxtLink>
           </div>
+          <div></div>
           <div v-if="next">
-            <NuxtLink :to="`/articles/${next?.id}`">
-              {{ next?.title }}
-              <q-btn :label="$t('articles.next')" />
+            <NuxtLink :to="next?.route">
+              <q-btn :label="$t('articles.next') + ':' + next?.title" />
             </NuxtLink>
           </div>
         </div>
@@ -39,11 +38,12 @@
 <script lang="ts" setup>
 import MarkdownRender from "~/components/article/MarkdownRender.vue";
 
+const route = useRoute();
 const { locale } = useI18n();
 const { computedTitle } = useWindow();
-const { getArticleIdByRoute } = useArticles();
+const { getArticleIdByRoute, getRouteByArticleId } = useArticles();
 
-const { data: article } = await useAsyncData(() =>
+const { data: article } = await useAsyncData(route.path + "#article", () =>
   queryCollection("articles")
     .where("id", "=", getArticleIdByRoute())
     .limit(1)
@@ -53,7 +53,7 @@ const { data: article } = await useAsyncData(() =>
     })
 );
 
-const { data: previous } = await useAsyncData(() =>
+const { data: previous } = await useAsyncData(route.path + "#previous", () =>
   queryCollection("articles")
     .where("stem", "LIKE", locale.value + "/%")
     .where("updatedAt", "<", article.value?.updatedAt)
@@ -65,10 +65,10 @@ const { data: previous } = await useAsyncData(() =>
     })
 );
 
-const { data: next } = await useAsyncData(() =>
+const { data: next } = await useAsyncData(route.path + "#next", () =>
   queryCollection("articles")
     .where("stem", "LIKE", locale.value + "/%")
-    .where("updatedAt", "<", article.value?.updatedAt)
+    .where("updatedAt", ">", article.value?.updatedAt)
     .order("updatedAt", "ASC")
     .limit(1)
     .first()
@@ -76,6 +76,13 @@ const { data: next } = await useAsyncData(() =>
       console.error(err);
     })
 );
+if (previous.value) {
+  previous.value.route = getRouteByArticleId(previous.value.id) || "";
+}
+
+if (next.value) {
+  next.value.route = getRouteByArticleId(next.value.id) || "";
+}
 
 useHead(() => ({
   titleTemplate: computedTitle(article.value?.title),
