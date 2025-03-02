@@ -1,21 +1,20 @@
 /* tailwind css */
 @custom-variant light (&:where(.light-mode, .light-mode *));
+
+/* nuxt ui */
 .light-mode body {
+  --ui-primary: #e91e63;
+  --ui-secondary: #ed4b82;
+  --ui-accent: #a31545;
+
   --ui-bg: white;
   --ui-text: black;
 }
 
 /* color mode */
 .light-mode body {
-  background-color: white;
-  color: black;
-}
-
-/* nuxt ui */
-:root {
-  --ui-primary: #e91e63;
-  --ui-secondary: #ed4b82;
-  --ui-accent: #a31545;
+  background-color: var(--ui-bg);
+  color: var(--ui-text);
 }
 
 /* quasar ui */

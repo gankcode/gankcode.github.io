@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hhh lpr fff" class="min-h-screen min-w-screen">
     <q-header
-      class="fixed w-full top-0 bg-transparent backdrop-blur-2xl shadow-md dark:shadow-gray-800"
+      class="fixed w-full top-0 bg-[var(--ui-bg)] shadow-md dark:shadow-gray-800"
       :style="{
         paddingTop: $env.style.header.height,
       }"

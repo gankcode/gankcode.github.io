@@ -1,20 +1,20 @@
 <template>
   <q-card
-    class="w-[96vw] max-w-[1020px] mx-[2vw] my-2 dark:bg-gray-800 cursor-pointer overflow-hidden"
-    @click="$router.push(article?.route)"
+    class="w-[96vw] max-w-[1020px] mx-[2vw] my-2 dark:bg-gray-800 overflow-hidden"
   >
     <q-card-section>
       <div class="flex flex-wrap items-center justify-between">
         <div
-          class="text-xl font-bold text-pink-700 underline underline-offset-4 hover:text-cyan-500"
+          class="text-xl font-bold text-pink-700 underline underline-offset-4 hover:text-cyan-500 cursor-pointer"
+          @click="$router.push(article?.route)"
         >
           {{ article?.title }}
         </div>
         <div class="flex flex-row">
-          <q-chip color="secondary" text-color="white" icon="alarm" clickable>
+          <q-chip color="secondary" text-color="white" icon="alarm">
             {{ $fmt?.fromNow?.(article.updatedAt) }}
           </q-chip>
-          <q-chip color="secondary" text-color="white" icon="event" clickable>
+          <q-chip color="secondary" text-color="white" icon="event">
             {{ $fmt?.localDate?.(article.updatedAt, "YYYY-MM-DD HH:mm") }}
           </q-chip>
         </div>
@@ -24,7 +24,7 @@
       <q-separator />
     </div>
     <q-card-section>
-      <div class="md:flex">
+      <div class="md:flex cursor-pointer" @click="$router.push(article?.route)">
         <div class="md:shrink-0">
           <img
             v-if="article?.cover"
@@ -34,7 +34,7 @@
           />
         </div>
         <div class="p-2">
-          <MarkdownRender :value="article?.excerpt" />
+          <MarkdownRender :value="article?.excerpt" x />
         </div>
       </div>
     </q-card-section>

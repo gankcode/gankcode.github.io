@@ -1,5 +1,4 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import tailwindcss from "@tailwindcss/vite";
 
 import appconfig from "./site.config";
 
@@ -11,9 +10,7 @@ export default defineNuxtConfig({
       enabled: true,
     },
   },
-  vite: {
-    plugins: [tailwindcss()],
-  },
+  vite: {},
   nitro: {
     prerender: {
       crawlLinks: true,
@@ -39,6 +36,7 @@ export default defineNuxtConfig({
     "nuxt-quasar-ui",
     "@nuxtjs/color-mode",
     "@nuxt/icon",
+    "@nuxt/fonts",
   ],
   srcDir: "src/",
   routeRules: {

@@ -1,21 +1,20 @@
 /* tailwind css */
 @custom-variant dark (&:where(.dark-mode, .dark-mode *));
+
+/* nuxt ui */
 .dark-mode body {
+  --ui-primary: #e91e63;
+  --ui-secondary: #ed4b82;
+  --ui-accent: #a31545;
+
   --ui-bg: black;
   --ui-text: white;
 }
 
 /* color mode */
 .dark-mode body {
-  background-color: black;
-  color: white;
-}
-
-/* nuxt ui */
-:root {
-  --ui-primary: #e91e63;
-  --ui-secondary: #ed4b82;
-  --ui-accent: #a31545;
+  background-color: var(--ui-bg);
+  color: var(--ui-text);
 }
 
 /* quasar ui*/
