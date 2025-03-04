@@ -1,5 +1,10 @@
 <template>
-  <ContentRenderer class="prose" :prose="true" v-if="value" :value="value" />
+  <ContentRenderer
+    class="W-full H-full prose"
+    :prose="true"
+    v-if="value"
+    :value="value"
+  />
 </template>
 
 <script lang="ts" setup>

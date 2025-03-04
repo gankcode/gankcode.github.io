@@ -1,10 +1,16 @@
 <template>
-  <div class="w-full h-full">
-    <ContentRenderer v-if="content" :value="content" />
+  <div class="w-full h-full flex justify-center items-center p-4">
+    <MarkdownRender
+      class="w-full h-full max-w-[1080px]"
+      v-if="content"
+      :value="content"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
+import MarkdownRender from "~/components/article/MarkdownRender.vue";
+
 const route = useRoute();
 const { locale } = useI18n();
 

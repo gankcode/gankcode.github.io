@@ -18,7 +18,7 @@
     <q-page-container>
       <q-page
         :style="{
-          minHeight: `calc(100vh - ${$env.style.header.height} - ${$env.style.footer.height})`,
+          minHeight: `calc(100vh - ${$env.style.header.height} - ${$env.style.footer.height} - 4px)`,
         }"
       >
         <AppMain />

@@ -1,24 +1,28 @@
 <template>
-  <q-layout view="lHh lpR fFf" container>
+  <q-layout
+    view="hHh LpR fFf"
+    :container="true"
+    :style="{
+      height: `calc(100vh - ${$env.style.header.height} - ${$env.style.footer.height} - 56px)`,
+    }"
+  >
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="showMenu = !showMenu" />
-
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
-          </q-avatar>
-          Title
-        </q-toolbar-title>
+        <q-toolbar-title> Online Tools </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
     <q-drawer show-if-above v-model="showMenu" side="left" bordered>
-      <!-- drawer content -->
+      <div v-for="(item, index) in items" :key="index">
+        {{ item.label }}
+        <div v-for="(subItem, subIndex) in item.items" :key="subIndex">
+          {{ subItem.label }}
+        </div>
+      </div>
     </q-drawer>
 
     <q-page-container>
-      23423423
       <NuxtPage />
     </q-page-container>
   </q-layout>
@@ -27,7 +31,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 
-const showMenu = ref(true);
+const showMenu = ref(false);
 
 const search = ref("");
 
@@ -91,3 +95,9 @@ const items = computed(() => {
   return filter;
 });
 </script>
+
+<style scoped>
+::v-deep .q-drawer {
+  position: relative !important;
+}
+</style>
