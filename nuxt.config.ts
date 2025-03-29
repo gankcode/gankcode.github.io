@@ -5,7 +5,11 @@ import appconfig from "./site.config";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
-  compatibilityDate: "2025-02-19",
+  compatibilityDate: "2025-03-29",
+  srcDir: "src/",
+  routeRules: {
+    "/": { prerender: true },
+  },
   devtools: {
     enabled: true,
     timeline: {
@@ -42,10 +46,6 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@nuxt/fonts",
   ],
-  srcDir: "src/",
-  routeRules: {
-    "/": { prerender: true },
-  },
   site: {
     url: appconfig.site.url,
   },

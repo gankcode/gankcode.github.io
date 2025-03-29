@@ -97,7 +97,7 @@ const items = computed(() => {
 </script>
 
 <style scoped>
-::v-deep .q-drawer {
+:deep( .q-drawer) {
   position: relative !important;
 }
 </style>

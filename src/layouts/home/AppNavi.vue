@@ -64,7 +64,7 @@ const tab = computed(() => {
   }
 }
 
-::v-deep(.q-tab--active) {
+:deep(.q-tab--active) {
   .q-tab__label {
     font-weight: 600 !important;
   }
