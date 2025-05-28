@@ -1,6 +1,6 @@
 <template>
   <ContentRenderer
-    class="W-full H-full prose"
+    class="w-full h-full prose"
     :prose="true"
     v-if="value"
     :value="value"

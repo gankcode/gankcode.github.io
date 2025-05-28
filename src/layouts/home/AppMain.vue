@@ -1,5 +1,5 @@
 <template>
-  <div class="min-w-screen">
+  <div>
     <BreadCrumbs />
     <NuxtPage />
   </div>

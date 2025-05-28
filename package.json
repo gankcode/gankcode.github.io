@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "ncu": "npm i -g npm-check-updates",
-    "up": "ncu -u",
+    "ncuUpdate": "ncu -u",
+    "upgrade": "npx nuxi upgrade",
     "postinstall": "nuxt prepare",
     "dev": "nuxt dev",
     "preview": "nuxt preview",
@@ -36,7 +37,7 @@
     "eslint": "^9.23.0",
     "gsap": "^3.12.7",
     "moment": "^2.30.1",
-    "nuxt": "^3.16.1",
+    "nuxt": "^3.17.4",
     "nuxt-quasar-ui": "^2.1.12",
     "quasar": "^2.18.1",
     "tailwindcss": "^4.0.17",

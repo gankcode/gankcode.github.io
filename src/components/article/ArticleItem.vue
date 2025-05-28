@@ -1,7 +1,5 @@
 <template>
-  <q-card
-    class="w-[96vw] max-w-[1020px] mx-[2vw] my-2 dark:bg-gray-800 overflow-hidden"
-  >
+  <q-card class="w-[95vw] mx-[2vw] my-2 dark:bg-gray-800 overflow-hidden">
     <q-card-section>
       <div class="flex flex-wrap items-center justify-between">
         <div

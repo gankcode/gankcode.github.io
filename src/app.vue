@@ -1,10 +1,10 @@
 <template>
   <Suspense>
     <template #default>
-      <div class="min-h-screen min-w-screen">
+      <div class="">
         <NuxtRouteAnnouncer />
         <NuxtLoadingIndicator />
-        <NuxtLayout name="home">
+        <NuxtLayout name="home" class="">
           <NuxtPage />
         </NuxtLayout>
       </div>
