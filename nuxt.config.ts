@@ -5,8 +5,8 @@ import appconfig from "./site.config";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
-  compatibilityDate: "2025-03-29",
-  srcDir: "src/",
+  compatibilityDate: '2025-07-15',
+  srcDir: "app/",
   routeRules: {
     "/": { prerender: true },
   },
@@ -102,7 +102,6 @@ export default defineNuxtConfig({
       redirectOn: "root", // all, root, no prefix
     },
     defaultLocale: `en`,
-    lazy: true,
   },
   css: ["~/assets/css/app.css"],
   quasar: {
@@ -125,5 +124,25 @@ export default defineNuxtConfig({
       fontIcons: ["bootstrap-icons", "line-awesome"],
     },
   },
-  content: {},
+  content: {
+    watch: {
+      enabled: true,
+      port: 4000,
+      showURL: false,
+    },
+    build: {
+      markdown: {
+        highlight: {
+          theme: {
+            // Default theme (same as single string)
+            default: 'github-light',
+            // Theme used if `html.dark`
+            dark: 'github-dark',
+            // Theme used if `html.sepia`
+            sepia: 'monokai'
+          }
+        }
+      }
+    }
+  },
 });

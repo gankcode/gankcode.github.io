@@ -6,8 +6,8 @@ export default defineContentConfig({
     articles: defineCollection({
       type: "page",
       source: {
-        cwd: path.resolve("src/public/static/articles"),
-        include: "**.md",
+        cwd: path.resolve("public/static/articles"),
+        include: "**/*.md",
       },
       schema: z.object({
         title: z.string(),
@@ -27,8 +27,8 @@ export default defineContentConfig({
     projects: defineCollection({
       type: "page",
       source: {
-        cwd: path.resolve("src/public/static/projects"),
-        include: "**.md",
+        cwd: path.resolve("public/static/projects"),
+        include: "**/*.md",
       },
       schema: z.object({
         title: z.string(),
@@ -48,8 +48,8 @@ export default defineContentConfig({
     about: defineCollection({
       type: "page",
       source: {
-        cwd: path.resolve("src/public/static/about"),
-        include: "**.md",
+        cwd: path.resolve("public/static/about"),
+        include: "**/*.md",
       },
       schema: z.object({
         title: z.string(),

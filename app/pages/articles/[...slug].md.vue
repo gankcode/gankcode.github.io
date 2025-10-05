@@ -76,6 +76,8 @@ const { data: next } = await useAsyncData(route.path + "#next", () =>
       console.error(err);
     })
 );
+
+
 if (previous.value) {
   previous.value.route = getRouteByArticleId(previous.value.id) || "";
 }
